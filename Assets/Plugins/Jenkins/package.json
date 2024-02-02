@@ -1,0 +1,16 @@
+{
+"name": "okinawa.ishix.unity-jenkins-builder",
+"version": "0.5.0",
+"displayName": "Unity Jenkins Builder",
+"description": "Building Unity from Jenkins.",
+"unity": "2021.3",
+"author": {
+    "name": "IShix",
+    "url": "https://github.com/IShix-g"
+},
+"keywords": [
+    "Jenkins"
+],
+"dependencies": {},
+"license": "MIT"
+}

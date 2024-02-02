@@ -1,0 +1,19 @@
+{
+    "name": "Unity.Jenkins.Test",
+    "rootNamespace": "",
+    "references": [
+        "GUID:9e366ea682dc4424aa30ab0f37aa07d7",
+        "GUID:a0dc22e0dfb6549fc8670051b3839a79"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
