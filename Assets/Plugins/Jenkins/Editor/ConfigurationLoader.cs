@@ -10,10 +10,8 @@ namespace Unity.Jenkins
         [InitializeOnLoadMethod]
         static void LoadConfigurationOnEditorStart()
         {
-            var assetsPath = Application.dataPath;
-            var rootPath = Directory.GetParent(assetsPath).ToString();
-            var sourcePath = "Packages/Unity Jenkins Builder/Jenkinsfile.groovy";
-            var destinationPath = Path.Combine(rootPath, "Jenkinsfile.groovy");
+            var sourcePath = "Packages/okinawa.ishix.unity.jenkins.builder/Editor/Jenkinsfile.groovy";
+            var destinationPath = Path.Combine(Directory.GetParent(Application.dataPath).ToString(), "Jenkinsfile.groovy");
             var hasDestinationPath = File.Exists(destinationPath);
             File.Copy(sourcePath, destinationPath, true);
             if (!hasDestinationPath)
