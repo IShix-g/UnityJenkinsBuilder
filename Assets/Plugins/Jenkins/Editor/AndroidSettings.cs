@@ -53,7 +53,8 @@ namespace Unity.Jenkins
                 PlayerSettings.Android.keyaliasPass = keyaliasPass;
             }
 
-            if (options.TryGetValue("androidTargetSdkVersion", out string androidTargetSdkVersion) && !string.IsNullOrEmpty(androidTargetSdkVersion))
+            if (options.TryGetValue("androidTargetSdkVersion", out string androidTargetSdkVersion)
+                && !string.IsNullOrEmpty(androidTargetSdkVersion))
             {
                 var targetSdkVersion = AndroidSdkVersions.AndroidApiLevelAuto;
                 try
