@@ -1,6 +1,6 @@
 {
 "name": "okinawa.ishix.unity.jenkins.builder",
-"version": "0.5.2",
+"version": "0.5.3",
 "displayName": "Unity Jenkins Builder",
 "description": "Building Unity from Jenkins.",
 "unity": "2021.3",

@@ -39,13 +39,8 @@ namespace Unity.Jenkins
                 }
             }
 
-            if (!options.TryGetValue("standaloneBuildSubtarget", out var subtargetValue)
-                || !Enum.TryParse(subtargetValue, out StandaloneBuildSubtarget buildSubtarget))
-            {
-                buildSubtarget = default;
-            }
-
             var buildTarget = (BuildTarget)Enum.Parse(typeof(BuildTarget), options["buildTarget"]);
+            var buildTargetGroup = buildTarget == BuildTarget.iOS ? BuildTargetGroup.iOS : BuildTargetGroup.Android;
             
             switch (buildTarget)
             {
@@ -65,23 +60,18 @@ namespace Unity.Jenkins
                 scenes = scenes,
                 locationPathName = options["buildPath"],
                 target = buildTarget,
-                options = buildOptions,
-                subtarget = (int) buildSubtarget
+                options = buildOptions
             };
 
             // Development Buildのみシンボル指定する
-            if ((buildOptions & BuildOptions.Development) != 0 )
+            if ((buildOptions & BuildOptions.Development) != 0)
             {
                 buildPlayerOptions.extraScriptingDefines = new[] {_devBuildSymbol};
                 Utils.PrintLog("Add Symbol : #" + _devBuildSymbol);
             }
             else
             {
-#if UNITY_IOS
-                PlayerSettings.SetScriptingBackend(BuildTargetGroup.iOS, ScriptingImplementation.IL2CPP);
-#elif UNITY_ANDROID
-                PlayerSettings.SetScriptingBackend(BuildTargetGroup.Android, ScriptingImplementation.IL2CPP);
-#endif
+                PlayerSettings.SetScriptingBackend(buildTargetGroup, ScriptingImplementation.IL2CPP);
             }
             
             if (options.TryGetValue("buildVersion", out var buildVersion)
@@ -133,7 +123,7 @@ namespace Unity.Jenkins
                 if (options.TryGetValue("appIconPath", out var appIconPath)
                     && !string.IsNullOrEmpty(appIconPath))
                 {
-                    var icon = PlayerSettings.GetIconsForTargetGroup(buildTarget == BuildTarget.iOS ? BuildTargetGroup.iOS : BuildTargetGroup.Android).FirstOrDefault();
+                    var icon = PlayerSettings.GetIconsForTargetGroup(buildTargetGroup).FirstOrDefault();
                     var iconPath = Application.dataPath + "/../" + appIconPath;
                     if (icon != default)
                     {
