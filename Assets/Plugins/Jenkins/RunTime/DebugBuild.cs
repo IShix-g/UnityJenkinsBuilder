@@ -117,9 +117,11 @@ namespace Unity.Jenkins
                 : "Trial period has ended.";
             text.resizeTextForBestFit = true;
             text.color = Color.black;
-            var fontName = "Arial.ttf";
+            
 #if UNITY_2022_1_OR_NEWER
-            fontName = "LegacyRuntime.ttf";
+            var fontName = "LegacyRuntime.ttf";
+#else
+            var fontName = "Arial.ttf";
 #endif
             text.font = Resources.GetBuiltinResource(typeof(Font), fontName) as Font;
             text.fontSize = 16;
