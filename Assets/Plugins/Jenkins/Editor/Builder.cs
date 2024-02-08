@@ -98,40 +98,38 @@ namespace Unity.Jenkins
                 AddressableAssetSettings.BuildPlayerContent();
             }
 #endif
-
-            // create snapShot
+            
+            if((buildOptions & BuildOptions.Development) != 0)
             {
                BuildSnapshot.ResourceAbsolutePath.CreateFolder();
                 var snapShot = Create(buildPlayerOptions.target, options);
                 BuildSnapshot.ResourceAbsolutePath.Write(snapShot);
+                Utils.PrintLog("Build Snapshot path : " + BuildSnapshot.ResourceAbsolutePath);
             }
             
             var buildReport = BuildPipeline.BuildPlayer(buildPlayerOptions);
             var summary = buildReport.summary;
             
-            if (buildReport.summary.result == BuildResult.Succeeded
-                && (buildOptions & BuildOptions.Development) != 0)
+            if (options.TryGetValue("buildSnapshotPath", out var buildSnapshotPath)
+                && !string.IsNullOrEmpty(buildSnapshotPath))
             {
-                if (options.TryGetValue("buildSnapshotPath", out var buildSnapshotPath)
-                    && !string.IsNullOrEmpty(buildSnapshotPath))
+                var snapShot = Create(buildPlayerOptions.target, summary, options);
+                (Application.dataPath + "/../" + buildSnapshotPath).Write(snapShot);
+                Utils.PrintLog("Build Snapshot path : " + buildSnapshotPath);
+            }
+            
+            if (buildReport.summary.result == BuildResult.Succeeded
+                && options.TryGetValue("appIconPath", out var appIconPath)
+                && !string.IsNullOrEmpty(appIconPath))
+            {
+                var icon = PlayerSettings.GetIconsForTargetGroup(buildTargetGroup).FirstOrDefault();
+                var iconPath = Application.dataPath + "/../" + appIconPath;
+                if (icon != default)
                 {
-                    var snapShot = Create(buildPlayerOptions.target, summary, options);
-                    (Application.dataPath + "/../" + buildSnapshotPath).Write(snapShot);
-                    Utils.PrintLog("Build SnapshotPath path : " + buildSnapshotPath);
+                    appIconPath.CreateFolder();
+                    File.WriteAllBytes(iconPath, icon.EncodeToPNG());
                 }
-                
-                if (options.TryGetValue("appIconPath", out var appIconPath)
-                    && !string.IsNullOrEmpty(appIconPath))
-                {
-                    var icon = PlayerSettings.GetIconsForTargetGroup(buildTargetGroup).FirstOrDefault();
-                    var iconPath = Application.dataPath + "/../" + appIconPath;
-                    if (icon != default)
-                    {
-                        appIconPath.CreateFolder();
-                        File.WriteAllBytes(iconPath, icon.EncodeToPNG());
-                    }
-                    Utils.PrintLog("Export Icon : " + (icon != default ? "Success" : "Failed") + " path : " + iconPath);
-                }
+                Utils.PrintLog("Export Icon : " + (icon != default ? "Success" : "Failed") + " path : " + iconPath);
             }
             
             Utils.ReportSummary(summary);
