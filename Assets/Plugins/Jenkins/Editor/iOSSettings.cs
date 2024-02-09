@@ -38,7 +38,7 @@ namespace Unity.Jenkins
             
             if (options.TryGetValue("provisioningProfileType", out var provisioningProfileType))
             {
-                PlayerSettings.iOS.iOSManualProvisioningProfileType = provisioningProfileType == "Development"
+                PlayerSettings.iOS.iOSManualProvisioningProfileType = provisioningProfileType == "development"
                     ? ProvisioningProfileType.Development
                     : ProvisioningProfileType.Distribution;
             }
