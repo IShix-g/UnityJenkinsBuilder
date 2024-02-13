@@ -100,6 +100,13 @@ namespace Unity.Jenkins
             var canvas = s_instance.AddComponent<Canvas>();
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
             canvas.sortingOrder = 999;
+            var canvasScaler = s_instance.AddComponent<CanvasScaler>();
+            canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+            canvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
+            canvasScaler.referenceResolution = new Vector2(1000, 1000);
+            var raycaster = s_instance.AddComponent<GraphicRaycaster>();
+            raycaster.ignoreReversedGraphics = true;
+            raycaster.blockingMask = -1;
             // image
             var image = new GameObject("Image").AddComponent<Image>();
             image.transform.SetParent(s_instance.transform, false);
