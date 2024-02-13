@@ -118,12 +118,15 @@ namespace Unity.Jenkins
                 Utils.PrintLog("Build Snapshot path : " + buildSnapshotPath);
             }
             
-            if (buildReport.summary.result == BuildResult.Succeeded
-                && options.TryGetValue("appIconPath", out var appIconPath)
+            if (options.TryGetValue("appIconPath", out var appIconPath)
                 && !string.IsNullOrEmpty(appIconPath))
             {
-                var icon = PlayerSettings.GetIconsForTargetGroup(buildTargetGroup).FirstOrDefault();
                 var iconPath = Application.dataPath + "/../" + appIconPath;
+                var icon = PlayerSettings.GetIconsForTargetGroup(buildTargetGroup).FirstOrDefault();
+                if (icon == default)
+                {
+                    icon = PlayerSettings.GetIconsForTargetGroup(BuildTargetGroup.Unknown).FirstOrDefault();
+                }
                 if (icon != default)
                 {
                     appIconPath.CreateFolder();
