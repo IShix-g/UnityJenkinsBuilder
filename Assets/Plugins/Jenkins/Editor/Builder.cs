@@ -129,7 +129,6 @@ namespace Unity.Jenkins
                 }
                 if (icon != default)
                 {
-                    appIconPath.CreateFolder();
                     File.WriteAllBytes(iconPath, icon.EncodeToPNG());
                 }
                 Utils.PrintLog("Export Icon : " + (icon != default ? "Success" : "Failed") + " path : " + iconPath);
