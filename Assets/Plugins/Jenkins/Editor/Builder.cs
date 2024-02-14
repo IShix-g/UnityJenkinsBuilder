@@ -129,7 +129,7 @@ namespace Unity.Jenkins
                 }
                 if (icon != default)
                 {
-                    File.WriteAllBytes(iconPath, icon.EncodeToPNG());
+                    File.Copy(AssetDatabase.GetAssetPath(icon), iconPath);
                 }
                 Utils.PrintLog("Export Icon : " + (icon != default ? "Success" : "Failed") + " path : " + iconPath);
             }
