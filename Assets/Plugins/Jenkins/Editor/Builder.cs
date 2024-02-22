@@ -96,6 +96,7 @@ namespace Unity.Jenkins
             {
                 AddressableAssetSettings.CleanPlayerContent();
                 AddressableAssetSettings.BuildPlayerContent();
+                Debug.Log("Build Addressable Assets");
             }
 #endif
             
