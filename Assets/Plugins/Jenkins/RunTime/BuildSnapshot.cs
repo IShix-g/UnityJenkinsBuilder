@@ -32,18 +32,22 @@ namespace Unity.Jenkins
         public string CommitId;
         public string CommitUrl;
         public string Branch;
-
-#if UNITY_IOS
+        
         public string XcodeVersion;
         public string ProvisioningProfileType;
-#elif UNITY_ANDROID
+
         public string TargetApiLevel;
         public string MinimumApiLevel;
-#endif
+
         public string ScriptingBackEnd;
 
-        public bool IsValid() => !string.IsNullOrEmpty(ProductName) && !string.IsNullOrEmpty(BundleId) && !string.IsNullOrEmpty(Version);
-        
+        public bool IsValid() => !string.IsNullOrEmpty(ProductName)
+                                 && !string.IsNullOrEmpty(BundleId)
+                                 && !string.IsNullOrEmpty(Version);
+
+        public override string ToString()
+             => (IsValid() ? JsonUtility.ToJson(this, true) : "BuildSnapshot is Empty") + "\n" + base.ToString();
+
         public static BuildSnapshot Load()
         {
             var asset = LoadTextAsset();

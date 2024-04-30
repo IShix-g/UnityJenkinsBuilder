@@ -11,7 +11,6 @@ namespace Unity.Jenkins
         [PostProcessBuild]
         public static void Start(BuildTarget buildTarget, string pathToProject)
         {
-#if UNITY_IOS
             if (buildTarget == BuildTarget.iOS)
             {
                 var plistPath = pathToProject + "/Info.plist";
@@ -21,7 +20,6 @@ namespace Unity.Jenkins
                 rootDict.SetString("ITSAppUsesNonExemptEncryption", "false");
                 File.WriteAllText(plistPath, plist.WriteToString());
             }
-#endif
         }
     }
 }
