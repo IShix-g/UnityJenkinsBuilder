@@ -18,6 +18,7 @@ namespace Unity.Jenkins
     public static class Builder
     {
         const string _devBuildSymbol = "JENKINS_DEBUG";
+        const string _buildSymbol = "JENKINS_BUILD";
 
         [PublicAPI]
         public static void Build()
@@ -66,11 +67,13 @@ namespace Unity.Jenkins
             // Development Buildのみシンボル指定する
             if ((buildOptions & BuildOptions.Development) != 0)
             {
-                buildPlayerOptions.extraScriptingDefines = new[] {_devBuildSymbol};
-                Utils.PrintLog("Add Symbol : #" + _devBuildSymbol);
+                buildPlayerOptions.extraScriptingDefines = new[] {_devBuildSymbol, _buildSymbol};
+                Utils.PrintLog("Add Symbol : #" + _devBuildSymbol + " & " + _buildSymbol);
             }
             else
             {
+                buildPlayerOptions.extraScriptingDefines = new[] {_buildSymbol};
+                Utils.PrintLog("Add Symbol : #" + _buildSymbol);
                 PlayerSettings.SetScriptingBackend(buildTargetGroup, ScriptingImplementation.IL2CPP);
             }
             
