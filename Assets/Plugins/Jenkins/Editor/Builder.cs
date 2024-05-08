@@ -64,11 +64,11 @@ namespace Unity.Jenkins
                 options = buildOptions
             };
 
-            // Development Buildのみシンボル指定する
+            // Development Build
             if ((buildOptions & BuildOptions.Development) != 0)
             {
                 buildPlayerOptions.extraScriptingDefines = new[] {_devBuildSymbol, _buildSymbol};
-                Utils.PrintLog("Add Symbol : #" + _devBuildSymbol + " & " + _buildSymbol);
+                Utils.PrintLog("Add Symbols : #" + _devBuildSymbol + ", #" + _buildSymbol);
             }
             else
             {
